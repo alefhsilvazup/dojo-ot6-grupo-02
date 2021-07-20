@@ -18,7 +18,11 @@ public class TurmaRequest {
     @ValorUnico(obj = Turma.class, fieldName = "terminaEm")
     private LocalDateTime terminaEm;
 
-    public Turma toModel(EntityManager entityManager) {
+    public Turma toModel() {
+        return new Turma(
+                this.nome,
+                this.terminaEm
+        );
 
     }
 }
