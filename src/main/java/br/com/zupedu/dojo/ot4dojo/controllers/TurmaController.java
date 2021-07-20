@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,11 +24,12 @@ public class TurmaController {
 
     @PostMapping("/cadastraturma")
     @Transactional
-    public String cadastraTurma(@RequestBody @Valid TurmaRequest turmaRequest) {
+    public ResponseEntity<Turma> cadastraTurma(@RequestBody @Valid TurmaRequest turmaRequest, UriComponentsBuilder builder) {
         Turma turma = turmaRequest.toModel();
-  
+        
         entityManager.persist(turma);
-        return turmaRequest.toString();
+        URI uri = builder.path("/turmas/{id}").build(turma.getId());
+        return ResponseEntity.created(uri).build();
 
         
  
