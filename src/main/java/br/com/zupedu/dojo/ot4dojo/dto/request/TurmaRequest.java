@@ -17,12 +17,15 @@ public class TurmaRequest {
     private String nome;
     @ValorUnico(obj = Turma.class, fieldName = "terminaEm")
     private LocalDateTime terminaEm;
-
-    public Turma toModel() {
-        return new Turma(
-                this.nome,
-                this.terminaEm
-        );
-
+    
+    public TurmaRequest(@NotNull @NotEmpty @Length(max = 50) String nome, LocalDateTime terminaEm) {
+		super();
+		this.nome = nome;
+		this.terminaEm = terminaEm;
+	}
+    
+    
+	public Turma toModel() {
+          return new Turma(this.nome, this.terminaEm);
     }
 }
